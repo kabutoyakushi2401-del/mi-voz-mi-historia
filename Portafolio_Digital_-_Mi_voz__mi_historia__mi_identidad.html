@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi voz, mi historia, mi identidad · José Eduardo Ramírez Gutiérrez</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    // Configuración de paleta editorial oscura y tipografías
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            graphite: '#111317',
+            charcoal: '#181B22',
+            elevated: '#20242E',
+            champagne: '#C9A96E',
+            champagneSoft: '#E2C896',
+            ivory: '#F3F4F6',
+            muted: '#9CA3AF',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Inter"', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #111317;
+      color: #F3F4F6;
+      font-family: 'Inter', sans-serif;
+      background-image:
+        radial-gradient(circle at 12% 6%, rgba(201, 169, 110, 0.08), transparent 36%),
+        radial-gradient(circle at 88% 20%, rgba(201, 169, 110, 0.05), transparent 40%);
+    }
+
+    .card-editorial {
+      background-color: #181B22;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 38px -18px rgba(0, 0, 0, 0.75);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .card-interactive:hover {
+      transform: translateY(-3px);
+      border-color: rgba(201, 169, 110, 0.45);
+    }
+
+    .title-gold {
+      background: linear-gradient(135deg, #F3F4F6 15%, #E2C896 60%, #C9A96E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .page-view {
+      display: none;
+      animation: fadeSlide 0.35s ease forwards;
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-champagne selection:text-graphite">
+
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR FIJA -->
+  <header class="sticky top-0 z-40 bg-graphite/90 backdrop-blur-md border-b border-white/[0.08]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-4">
+        <!-- Marca / Identidad -->
+        <button onclick="navigate('inicio')" class="flex items-center gap-3 text-left group focus:outline-none">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-champagne/15 border border-champagne/45 flex items-center justify-center shrink-0">
+            <span class="font-serif text-lg font-bold text-champagne">JE</span>
+          </div>
+          <div>
+            <p class="font-serif text-base sm:text-lg font-bold text-ivory leading-tight group-hover:text-champagneSoft transition-colors">
+              Mi voz, mi historia, mi identidad
+            </p>
+            <p class="text-[11px] uppercase tracking-[0.15em] text-muted">
+              José Eduardo Ramírez · 1° D TV · Prepa 2
+            </p>
+          </div>
+        </button>
+
+        <!-- Navegación Desktop -->
+        <nav aria-label="Menú principal" class="hidden md:flex items-center gap-1 bg-charcoal p-1.5 rounded-2xl border border-white/[0.08]">
+          <button data-tab="inicio" onclick="navigate('inicio')" class="nav-link px-3.5 py-2 rounded-xl text-xs font-medium transition-all">
+            Inicio
+          </button>
+          <button data-tab="autobiografias" onclick="navigate('autobiografias')" class="nav-link px-3.5 py-2 rounded-xl text-xs font-medium transition-all">
+            Autobiografías
+          </button>
+          <button data-tab="historia" onclick="navigate('historia')" class="nav-link px-3.5 py-2 rounded-xl text-xs font-medium transition-all">
+            Historia de la UdeG
+          </button>
+          <button data-tab="matematicas" onclick="navigate('matematicas')" class="nav-link px-3.5 py-2 rounded-xl text-xs font-medium transition-all">
+            Conocimiento Matemático
+          </button>
+          <button data-tab="ingles" onclick="navigate('ingles')" class="nav-link px-3.5 py-2 rounded-xl text-xs font-medium transition-all">
+            Inglés
+          </button>
+        </nav>
+
+        <!-- Botón Menú Móvil -->
+        <button onclick="toggleMobileNav()" aria-label="Abrir menú" class="md:hidden p-2.5 rounded-xl bg-charcoal border border-white/10 text-ivory hover:border-champagne/50">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menú Móvil Desplegable -->
+      <nav id="mobile-drawer" class="hidden md:hidden pb-4 pt-2 border-t border-white/[0.08] flex flex-col gap-1.5">
+        <button data-tab="inicio" onclick="navigate('inicio')" class="nav-link w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium">
+          01. Inicio
+        </button>
+        <button data-tab="autobiografias" onclick="navigate('autobiografias')" class="nav-link w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium">
+          02. Autobiografías
+        </button>
+        <button data-tab="historia" onclick="navigate('historia')" class="nav-link w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium">
+          03. Historia de la UdeG
+        </button>
+        <button data-tab="matematicas" onclick="navigate('matematicas')" class="nav-link w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium">
+          04. Conocimiento Matemático
+        </button>
+        <button data-tab="ingles" onclick="navigate('ingles')" class="nav-link w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium">
+          05. Inglés
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+
+    <!-- ===================================================================
+         SECCIÓN 1: INICIO (PORTADA)
+         =================================================================== -->
+    <section id="view-inicio" class="page-view active space-y-8">
+      <!-- Hero Principal -->
+      <div class="card-editorial rounded-3xl p-7 sm:p-12 space-y-5">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-champagne/15 border border-champagne/35 text-champagneSoft text-xs font-medium tracking-wider uppercase">
+          Portafolio Digital Interdisciplinar · Preparatoria No. 2 · Universidad de Guadalajara (UdeG)
+        </span>
+
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08] title-gold">
+          Mi voz, mi historia, mi identidad
+        </h1>
+
+        <p class="text-muted text-base sm:text-lg max-w-2xl leading-relaxed font-light">
+          Un espacio digital que entrelaza mi historia familiar, mi formación en la <span class="text-ivory font-medium">Escuela Preparatoria No. 2</span> y las habilidades desarrolladas a través de mis asignaturas.
+        </p>
+
+        <div class="pt-2 flex flex-wrap gap-3">
+          <button onclick="navigate('autobiografias')" class="px-5 py-2.5 rounded-xl bg-champagne text-graphite font-semibold text-xs sm:text-sm hover:bg-champagneSoft transition-colors">
+            Explorar autobiografías
+          </button>
+          <button onclick="navigate('historia')" class="px-5 py-2.5 rounded-xl bg-elevated hover:bg-white/10 text-ivory border border-white/10 font-medium text-xs sm:text-sm transition-colors">
+            Ver línea del tiempo UdeG
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjeta de Datos del Estudiante -->
+      <div class="card-editorial rounded-3xl p-7 sm:p-8 border-champagne/25 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/[0.08] pb-4">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Identificación Académica</span>
+            <h2 class="font-serif text-2xl font-semibold text-ivory mt-0.5">Datos del Estudiante</h2>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full bg-elevated text-champagneSoft border border-white/10 w-fit">
+            Portafolio Individual · Ciclo 2026
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div class="lg:col-span-2 p-4 rounded-2xl bg-graphite/75 border border-white/[0.06]">
+            <p class="text-[11px] uppercase tracking-wider text-muted">Nombre completo</p>
+            <p class="text-sm sm:text-base font-semibold text-ivory mt-1">José Eduardo Ramírez Gutiérrez</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-graphite/75 border border-white/[0.06]">
+            <p class="text-[11px] uppercase tracking-wider text-muted">Grado y Grupo</p>
+            <p class="text-sm sm:text-base font-semibold text-champagneSoft mt-1">1° D</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-graphite/75 border border-white/[0.06]">
+            <p class="text-[11px] uppercase tracking-wider text-muted">Turno</p>
+            <p class="text-sm sm:text-base font-semibold text-champagneSoft mt-1">Vespertino (1DTV)</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-graphite/75 border border-white/[0.06]">
+            <p class="text-[11px] uppercase tracking-wider text-muted">Plantel</p>
+            <p class="text-sm font-semibold text-ivory mt-1">Escuela Preparatoria No. 2, UdeG</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dos Tarjetas Editoriales: Introducción y Propósito -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <article class="card-editorial card-interactive rounded-3xl p-7 sm:p-8 space-y-3">
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">01 · Introducción del sitio web</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory">Capítulos de una misma historia</h2>
+          <p class="text-muted text-sm sm:text-base leading-relaxed">
+            Este portafolio digital reúne los subproductos académicos desarrollados durante el semestre como capítulos articulados de una misma narrativa personal y escolar. A través de cada sección se conecta mi trayectoria familiar y cotidiana con mi identidad universitaria dentro de la Universidad de Guadalajara, poniendo en práctica competencias de redacción, análisis cuantitativo, investigación histórica y diseño editorial.
+          </p>
+        </article>
+
+        <article class="card-editorial card-interactive rounded-3xl p-7 sm:p-8 space-y-3">
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">02 · Propósito del proyecto interdisciplinar</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory">Una mirada integral y crítica</h2>
+          <p class="text-muted text-sm sm:text-base leading-relaxed">
+            El propósito de este proyecto interdisciplinar es integrar los saberes de <strong class="text-ivory font-medium">Lengua y Comunicación</strong>, <strong class="text-ivory font-medium">Sexualidad y Género</strong>, <strong class="text-ivory font-medium">Historia e Identidad Universitaria</strong>, <strong class="text-ivory font-medium">Conocimiento Matemático</strong> y <strong class="text-ivory font-medium">Lengua Extranjera</strong> para comprender la identidad personal y escolar desde una perspectiva crítica, creativa y bien fundamentada.
+          </p>
+        </article>
+      </div>
+
+      <!-- Accesos Directos a las 4 Subpáginas -->
+      <div class="space-y-4">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Navegación Rápida</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory mt-0.5">Subpáginas del Portafolio</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+          <button onclick="navigate('autobiografias')" class="md:col-span-7 card-editorial card-interactive rounded-3xl p-7 text-left group flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-champagne/15 text-champagneSoft border border-champagne/30">
+                  Lengua y Comunicación · Sexualidad y Género
+                </span>
+                <span class="text-champagne group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+              <h3 class="font-serif text-2xl font-semibold text-ivory group-hover:text-champagneSoft transition-colors">
+                01. Autobiografías
+              </h3>
+              <p class="text-sm text-muted leading-relaxed">
+                Mis raíces en Guadalajara con mis papás Eduardo y Guadalupe, mis hermanos Cristopher y Mateo, mi ingreso a la Prepa 2, mis valores afectivos y mi meta en tecnología.
+              </p>
+            </div>
+            <p class="text-xs text-champagneSoft/85">Selector interactivo de dos pestañas</p>
+          </button>
+
+          <button onclick="navigate('historia')" class="md:col-span-5 card-editorial card-interactive rounded-3xl p-7 text-left group flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-elevated text-champagneSoft border border-white/10">
+                  Historia e Identidad
+                </span>
+                <span class="text-champagne group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+              <h3 class="font-serif text-2xl font-semibold text-ivory group-hover:text-champagneSoft transition-colors">
+                02. Historia de la UdeG
+              </h3>
+              <p class="text-sm text-muted leading-relaxed">
+                Línea del tiempo ilustrada con los 5 sucesos fundamentales: 1792, 1826, 1925, 1989–1994 y 2024.
+              </p>
+            </div>
+            <p class="text-xs text-champagne">Lema: “Piensa y Trabaja”</p>
+          </button>
+
+          <button onclick="navigate('matematicas')" class="md:col-span-6 card-editorial card-interactive rounded-3xl p-7 text-left group flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-elevated text-champagneSoft border border-white/10">
+                  Conocimiento Matemático
+                </span>
+                <span class="text-champagne group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+              <h3 class="font-serif text-2xl font-semibold text-ivory group-hover:text-champagneSoft transition-colors">
+                03. Densidad Poblacional: Prepa 2 vs. Prepa 3
+              </h3>
+              <p class="text-sm text-muted leading-relaxed">
+                Gráficas agrupadas, indicadores de matrícula SEMS (Ciclo 2026-D) y análisis comparativo de densidad operativa.
+              </p>
+            </div>
+            <p class="text-xs text-muted">5.97 m²/alumno vs. 6.16 m²/alumno</p>
+          </button>
+
+          <button onclick="navigate('ingles')" class="md:col-span-6 card-editorial card-interactive rounded-3xl p-7 text-left group flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-champagne/15 text-champagneSoft border border-champagne/30">
+                  Lengua Extranjera (Inglés)
+                </span>
+                <span class="text-champagne group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+              <h3 class="font-serif text-2xl font-semibold text-ivory group-hover:text-champagneSoft transition-colors">
+                04. Personal Introduction Profile
+              </h3>
+              <p class="text-sm text-muted leading-relaxed">
+                Ficha básica individual en inglés aplicando el tiempo presente simple, pasatiempos, preferencias y descripción física.
+              </p>
+            </div>
+            <p class="text-xs font-serif italic text-champagneSoft">“Hi, I am Eduardo. I am 15 years old...”</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECCIÓN 2: AUTOBIOGRAFÍAS (SELECTOR DE DOS PESTAÑAS)
+         =================================================================== -->
+    <section id="view-autobiografias" class="page-view space-y-8">
+      <div class="card-editorial rounded-3xl p-7 sm:p-10 space-y-5">
+        <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Capítulo 01 · Escritura e Identidad</span>
+        <h1 class="font-serif text-3xl sm:text-5xl font-bold title-gold">Relatos Autobiográficos</h1>
+        <p class="text-muted text-sm sm:text-base max-w-3xl leading-relaxed">
+          Selecciona una pestaña para explorar cada enfoque: mi trayectoria familiar y escolar en <strong class="text-ivory">Lengua y Comunicación</strong>, o mi identidad, valores afectivos y proyecto de vida en <strong class="text-ivory">Sexualidad y Género</strong>.
+        </p>
+
+        <!-- Selector Interactivo de Dos Pestañas -->
+        <div role="tablist" class="inline-flex flex-wrap gap-2 p-1.5 rounded-2xl bg-graphite/80 border border-white/10">
+          <button id="btn-tab-a" role="tab" aria-selected="true" onclick="switchAutoTab('a')" class="px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-champagne text-graphite transition-all">
+            Lengua y Comunicación — Mi historia y raíces
+          </button>
+          <button id="btn-tab-b" role="tab" aria-selected="false" onclick="switchAutoTab('b')" class="px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-muted hover:text-ivory transition-all">
+            Sexualidad y Género — Identidad y proyecto de vida
+          </button>
+        </div>
+      </div>
+
+      <!-- Pestaña A: Lengua y Comunicación -->
+      <article id="auto-tab-a" class="card-editorial rounded-3xl p-7 sm:p-10 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-5">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Lengua y Comunicación</span>
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory mt-1">
+              Mi historia y raíces
+            </h2>
+          </div>
+          <span class="px-3.5 py-1 rounded-full text-xs bg-elevated text-champagneSoft border border-white/10">
+            Guadalajara, Jalisco · 2011 – 2026
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-8 space-y-4 text-ivory/90 text-sm sm:text-base leading-[1.85] font-light">
+            <p>
+              Me llamo José Eduardo Ramírez Gutiérrez; nací el 24 de enero de 2011 en Guadalajara, Jalisco, y tengo 15 años. Crecí dentro de una familia unida junto a mi hermano Cristopher, mi papá Eduardo y mi mamá Guadalupe. Entre mis primeros recuerdos guardo mi primer cumpleaños con temática de Mickey Mouse en casa de mi abuelita, donde viví durante mi infancia temprana. Aunque el paso por el preescolar estuvo marcado por experiencias difíciles con algunas maestras, la primaria fue una etapa muy feliz en la que hice grandes amistades y construí muy buenos lazos con mis profesores.
+            </p>
+            <p>
+              A finales de junio llegó a nuestra familia mi hermano menor, Mateo, con quien comparto momentos muy divertidos. Más adelante cursé la secundaria, una etapa de buenas calificaciones en la que también defendí mi estilo personal llevando el cabello largo como a mí me gustaba. Durante esos años armé mi propia computadora para jugar y celebré junto a mi familia el cambio a una mejor casa, así como la adquisición de un automóvil en el que salimos a pasear y conocer distintos lugares. Finalmente, tras prepararme con dedicación y superar los nervios del examen de admisión, logré ingresar a la Escuela Preparatoria No. 2 de la Universidad de Guadalajara.
+            </p>
+          </div>
+
+          <aside class="lg:col-span-4 p-5 rounded-2xl bg-graphite/75 border border-champagne/25 space-y-3">
+            <p class="text-xs font-semibold uppercase tracking-widest text-champagne">Hitos Personales</p>
+            <ul class="space-y-2.5 text-xs sm:text-sm text-muted">
+              <li><strong class="text-ivory">Nacimiento:</strong> 24 de enero de 2011 en Guadalajara, Jalisco.</li>
+              <li><strong class="text-ivory">Núcleo familiar:</strong> Papá Eduardo, mamá Guadalupe y hermanos Cristopher y Mateo.</li>
+              <li><strong class="text-ivory">Adolescencia:</strong> Armado de mi propia PC gamer, nueva casa y viajes familiares.</li>
+              <li><strong class="text-ivory">Logro académico:</strong> Ingreso aprobado a la Preparatoria No. 2, UdeG.</li>
+            </ul>
+          </aside>
+        </div>
+      </article>
+
+      <!-- Pestaña B: Sexualidad y Género -->
+      <article id="auto-tab-b" class="hidden card-editorial rounded-3xl p-7 sm:p-10 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-5">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Sexualidad y Género</span>
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory mt-1">
+              Identidad, valores y proyecto de vida
+            </h2>
+          </div>
+          <span class="px-3.5 py-1 rounded-full text-xs bg-elevated text-champagneSoft border border-white/10">
+            Valores Afectivos y Derechos Sexuales
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-8 space-y-4 text-ivory/90 text-sm sm:text-base leading-[1.85] font-light">
+            <p>
+              Me considero una persona divertida, cercana y de fácil confianza, a quien le gusta convivir de forma sincera. Disfruto mucho jugar videojuegos y practicar básquetbol; físicamente soy de complexión delgada, estatura media-baja, cabello y ojos cafés, y me identifico como hombre heterosexual. A lo largo de mi vida, dos acontecimientos dejaron una huella profunda en mí: la alegría del nacimiento de mi hermano y el fallecimiento de mi abuela, experiencias que reafirmaron lo valioso que es el respaldo constante de mis padres.
+            </p>
+            <p>
+              En el ámbito afectivo, considero que una relación sana debe sostenerse en la confianza, la honestidad, el respeto y la responsabilidad, manteniendo siempre una comunicación abierta incluso cuando surgen problemas, sin ocultar lo que es importante. Asimismo, reconozco el valor fundamental de los derechos sexuales, especialmente la privacidad sobre nuestro propio cuerpo y el consentimiento. De cara al futuro, proyecto estudiar una carrera universitaria en programación o tecnología y obtener mi título profesional para dedicarme a lo que realmente me apasiona.
+            </p>
+          </div>
+
+          <aside class="lg:col-span-4 p-5 rounded-2xl bg-graphite/75 border border-champagne/25 space-y-4">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-champagne mb-2.5">Pilares y Derechos</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 rounded-lg bg-elevated text-xs text-ivory border border-white/10">Confianza</span>
+                <span class="px-2.5 py-1 rounded-lg bg-elevated text-xs text-ivory border border-white/10">Honestidad</span>
+                <span class="px-2.5 py-1 rounded-lg bg-elevated text-xs text-ivory border border-white/10">Respeto</span>
+                <span class="px-2.5 py-1 rounded-lg bg-elevated text-xs text-ivory border border-white/10">Responsabilidad</span>
+                <span class="px-2.5 py-1 rounded-lg bg-champagne/15 text-xs text-champagneSoft border border-champagne/30">Consentimiento</span>
+                <span class="px-2.5 py-1 rounded-lg bg-champagne/15 text-xs text-champagneSoft border border-champagne/30">Privacidad corporal</span>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-white/[0.08]">
+              <p class="text-[11px] uppercase tracking-wider text-muted">Meta Profesional</p>
+              <p class="text-sm font-semibold text-ivory mt-1">Programación y Tecnología (Título Universitario)</p>
+            </div>
+          </aside>
+        </div>
+      </article>
+    </section>
+
+    <!-- ===================================================================
+         SECCIÓN 3: HISTORIA DE LA UDEG (5 HITOS CON ILUSTRACIONES SVG)
+         =================================================================== -->
+    <section id="view-historia" class="page-view space-y-8">
+      <div class="card-editorial rounded-3xl p-7 sm:p-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div class="space-y-3 max-w-2xl">
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">
+            Capítulo 02 · Historia e Identidad Universitaria
+          </span>
+          <h1 class="font-serif text-3xl sm:text-5xl font-bold title-gold">
+            Conformación de la Universidad de Guadalajara
+          </h1>
+          <p class="text-muted text-sm sm:text-base leading-relaxed">
+            Cinco momentos decisivos que forjaron la identidad, el carácter público y la autonomía de nuestra Benemérita Casa de Estudios desde 1792 hasta 2024.
+          </p>
+        </div>
+
+        <div class="shrink-0 px-6 py-5 rounded-2xl bg-graphite/85 border border-champagne/35 text-center space-y-1">
+          <p class="text-[10px] uppercase tracking-[0.25em] text-muted">Lema Universitario</p>
+          <p class="font-serif text-2xl sm:text-3xl font-bold text-champagne tracking-wide">
+            “PIENSA Y TRABAJA”
+          </p>
+          <p class="text-xs text-muted">Benemérita Universidad de Guadalajara</p>
+        </div>
+      </div>
+
+      <!-- Línea del Tiempo Visual -->
+      <div class="relative pl-5 sm:pl-10 border-l-2 border-champagne/35 space-y-7 ml-2 sm:ml-4">
+
+        <!-- HITO 1: 1792 -->
+        <article class="relative card-editorial card-interactive rounded-3xl p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <span class="absolute -left-[29px] sm:-left-[49px] top-9 w-4 h-4 rounded-full bg-champagne ring-4 ring-graphite"></span>
+
+          <div class="lg:col-span-8 space-y-3">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-champagne text-graphite">
+                3 de noviembre de 1792
+              </span>
+              <span class="text-xs uppercase tracking-widest text-champagneSoft">Hito 01 · Origen Colonial</span>
+            </div>
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory">
+              Fundación de la Real Universidad de Guadalajara
+            </h2>
+            <p class="text-muted text-sm sm:text-base leading-relaxed">
+              Inaugurada formalmente el 3 de noviembre de 1792 por el fraile dominico <strong class="text-ivory font-medium">Antonio de Alcalde y Barriga</strong> tras la cédula real expedida por Carlos IV en 1791, evitando que los jóvenes del occidente del país tuvieran que viajar hasta la Ciudad de México para cursar estudios superiores de teología, derecho y medicina.
+            </p>
+          </div>
+
+          <!-- Ilustración SVG 1792: Arco colonial, pergamino y pluma -->
+          <div class="lg:col-span-4 rounded-2xl bg-graphite/85 border border-champagne/25 p-5 flex flex-col items-center justify-center text-center">
+            <svg viewBox="0 0 220 130" class="w-full max-w-[210px] h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="10" width="200" height="110" rx="14" stroke="#C9A96E" stroke-opacity="0.25" />
+              <!-- Arco arquitectónico colonial -->
+              <path d="M42 105V58C42 38 60 24 82 24C104 24 122 38 122 58V105" stroke="#C9A96E" stroke-width="2" />
+              <path d="M52 105V60C52 44 65 33 82 33C99 33 112 44 112 60V105" stroke="#E2C896" stroke-opacity="0.45" stroke-width="1.2" />
+              <line x1="34" y1="105" x2="186" y2="105" stroke="#C9A96E" stroke-opacity="0.5" stroke-width="1.5" />
+              <!-- Pergamino y pluma -->
+              <rect x="128" y="42" width="46" height="52" rx="4" fill="#181B22" stroke="#C9A96E" stroke-width="1.6" />
+              <line x1="136" y1="54" x2="166" y2="54" stroke="#E2C896" stroke-width="1.4" />
+              <line x1="136" y1="64" x2="162" y2="64" stroke="#9CA3AF" stroke-width="1.2" />
+              <line x1="136" y1="73" x2="158" y2="73" stroke="#9CA3AF" stroke-width="1.2" />
+              <path d="M162 84L185 32C177 35 170 43 166 55L158 82L162 84Z" fill="#C9A96E" fill-opacity="0.3" stroke="#E2C896" stroke-width="1.4" />
+              <text x="82" y="82" text-anchor="middle" fill="#E2C896" font-family="Georgia, serif" font-size="15" font-weight="bold">1792</text>
+            </svg>
+            <span class="text-[11px] uppercase tracking-widest text-champagneSoft mt-2">Cédula Real · Fray Antonio Alcalde</span>
+          </div>
+        </article>
+
+        <!-- HITO 2: 1826 -->
+        <article class="relative card-editorial card-interactive rounded-3xl p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <span class="absolute -left-[29px] sm:-left-[49px] top-9 w-4 h-4 rounded-full bg-champagne ring-4 ring-graphite"></span>
+
+          <div class="lg:col-span-8 space-y-3">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-champagne text-graphite">
+                Año 1826
+              </span>
+              <span class="text-xs uppercase tracking-widest text-champagneSoft">Hito 02 · Reforma Liberal</span>
+            </div>
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory">
+              Fundación del Instituto de Ciencias del Estado
+            </h2>
+            <p class="text-muted text-sm sm:text-base leading-relaxed">
+              Tras la Independencia, el gobernador constitucional <strong class="text-ivory font-medium">Prisciliano Sánchez</strong> clausuró la universidad colonial y fundó en 1826 el Instituto de Ciencias del Estado en Guadalajara, impulsando una educación científica, moderna y laica frente al antiguo modelo escolástico.
+            </p>
+          </div>
+
+          <!-- Ilustración SVG 1826: Compás científico, libro abierto y estrella liberal -->
+          <div class="lg:col-span-4 rounded-2xl bg-graphite/85 border border-champagne/25 p-5 flex flex-col items-center justify-center text-center">
+            <svg viewBox="0 0 220 130" class="w-full max-w-[210px] h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="10" width="200" height="110" rx="14" stroke="#C9A96E" stroke-opacity="0.25" />
+              <!-- Libro abierto -->
+              <path d="M40 92C58 84 74 86 88 94V52C74 44 58 42 40 50V92Z" fill="#181B22" stroke="#C9A96E" stroke-width="1.6" />
+              <path d="M136 92C118 84 102 86 88 94V52C102 44 118 42 136 50V92Z" fill="#181B22" stroke="#C9A96E" stroke-width="1.6" />
+              <!-- Compás científico -->
+              <circle cx="164" cy="40" r="5" stroke="#E2C896" stroke-width="1.6" />
+              <line x1="162" y1="45" x2="146" y2="94" stroke="#E2C896" stroke-width="1.8" />
+              <line x1="166" y1="45" x2="182" y2="94" stroke="#E2C896" stroke-width="1.8" />
+              <path d="M150 74C159 79 169 79 178 74" stroke="#C9A96E" stroke-width="1.4" />
+              <!-- Estrella de la Ilustración -->
+              <polygon points="88,20 91,28 99,28 92,33 95,41 88,36 81,41 84,33 77,28 85,28" fill="#C9A96E" fill-opacity="0.4" stroke="#E2C896" stroke-width="1" />
+              <text x="88" y="111" text-anchor="middle" fill="#E2C896" font-family="Georgia, serif" font-size="14" font-weight="bold">1826</text>
+            </svg>
+            <span class="text-[11px] uppercase tracking-widest text-champagneSoft mt-2">Ciencia y Educación Laica</span>
+          </div>
+        </article>
+
+        <!-- HITO 3: 1925 -->
+        <article class="relative card-editorial card-interactive rounded-3xl p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <span class="absolute -left-[29px] sm:-left-[49px] top-9 w-4 h-4 rounded-full bg-champagne ring-4 ring-graphite"></span>
+
+          <div class="lg:col-span-8 space-y-3">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-champagne text-graphite">
+                12 de octubre de 1925
+              </span>
+              <span class="text-xs uppercase tracking-widest text-champagneSoft">Hito 03 · Refundación Moderna</span>
+            </div>
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory">
+              Refundación Moderna de la UdeG
+            </h2>
+            <p class="text-muted text-sm sm:text-base leading-relaxed">
+              Consolidada el 12 de octubre de 1925 en el Teatro Degollado bajo el gobernador <strong class="text-ivory font-medium">José Guadalupe Zuno</strong> y el primer rector <strong class="text-ivory font-medium">Enrique Díaz de León</strong>, unificando las escuelas profesionales bajo ideales sociales y populares de la Revolución Mexicana y el lema <em class="text-champagneSoft">“Piensa y Trabaja”</em>.
+            </p>
+          </div>
+
+          <!-- Ilustración SVG 1925: Frontispicio Teatro Degollado y lema Piensa y Trabaja -->
+          <div class="lg:col-span-4 rounded-2xl bg-graphite/85 border border-champagne/25 p-5 flex flex-col items-center justify-center text-center">
+            <svg viewBox="0 0 220 130" class="w-full max-w-[210px] h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="10" width="200" height="110" rx="14" stroke="#C9A96E" stroke-opacity="0.25" />
+              <!-- Frontispicio neoclásico Teatro Degollado -->
+              <polygon points="110,20 44,48 176,48" fill="#C9A96E" fill-opacity="0.18" stroke="#C9A96E" stroke-width="1.6" />
+              <rect x="52" y="48" width="116" height="6" stroke="#E2C896" stroke-width="1.2" />
+              <!-- Columnas -->
+              <line x1="64" y1="54" x2="64" y2="88" stroke="#E2C896" stroke-width="2.2" />
+              <line x1="87" y1="54" x2="87" y2="88" stroke="#E2C896" stroke-width="2.2" />
+              <line x1="110" y1="54" x2="110" y2="88" stroke="#E2C896" stroke-width="2.2" />
+              <line x1="133" y1="54" x2="133" y2="88" stroke="#E2C896" stroke-width="2.2" />
+              <line x1="156" y1="54" x2="156" y2="88" stroke="#E2C896" stroke-width="2.2" />
+              <line x1="46" y1="88" x2="174" y2="88" stroke="#C9A96E" stroke-width="1.8" />
+              <text x="110" y="104" text-anchor="middle" fill="#E2C896" font-family="Georgia, serif" font-size="11" font-weight="bold" letter-spacing="1.5">PIENSA Y TRABAJA</text>
+              <text x="110" y="115" text-anchor="middle" fill="#9CA3AF" font-family="sans-serif" font-size="9">1925</text>
+            </svg>
+            <span class="text-[11px] uppercase tracking-widest text-champagneSoft mt-2">Teatro Degollado · 1925</span>
+          </div>
+        </article>
+
+        <!-- HITO 4: 1989–1994 -->
+        <article class="relative card-editorial card-interactive rounded-3xl p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <span class="absolute -left-[29px] sm:-left-[49px] top-9 w-4 h-4 rounded-full bg-champagne ring-4 ring-graphite"></span>
+
+          <div class="lg:col-span-8 space-y-3">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-champagne text-graphite">
+                1989 – 1994
+              </span>
+              <span class="text-xs uppercase tracking-widest text-champagneSoft">Hito 04 · Descentralización</span>
+            </div>
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory">
+              Reforma Estructural y Red Universitaria
+            </h2>
+            <p class="text-muted text-sm sm:text-base leading-relaxed">
+              Impulsada desde 1989 por el rector <strong class="text-ivory font-medium">Raúl Padilla López</strong> y formalizada con la Ley Orgánica de 1994, transformó el esquema centralizado en la Red Universitaria para descentralizar la educación superior hacia todas las regiones de Jalisco.
+            </p>
+          </div>
+
+          <!-- Ilustración SVG 1989-1994: Red interconectada de nodos regionales -->
+          <div class="lg:col-span-4 rounded-2xl bg-graphite/85 border border-champagne/25 p-5 flex flex-col items-center justify-center text-center">
+            <svg viewBox="0 0 220 130" class="w-full max-w-[210px] h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="10" width="200" height="110" rx="14" stroke="#C9A96E" stroke-opacity="0.25" />
+              <!-- Líneas de interconexión -->
+              <line x1="110" y1="62" x2="60" y2="36" stroke="#C9A96E" stroke-width="1.5" />
+              <line x1="110" y1="62" x2="162" y2="36" stroke="#C9A96E" stroke-width="1.5" />
+              <line x1="110" y1="62" x2="54" y2="86" stroke="#C9A96E" stroke-width="1.5" />
+              <line x1="110" y1="62" x2="166" y2="86" stroke="#C9A96E" stroke-width="1.5" />
+              <line x1="110" y1="62" x2="110" y2="26" stroke="#E2C896" stroke-opacity="0.6" stroke-width="1.3" />
+              <!-- Nodos regionales -->
+              <circle cx="110" cy="62" r="13" fill="#C9A96E" fill-opacity="0.25" stroke="#E2C896" stroke-width="2" />
+              <circle cx="110" cy="62" r="4" fill="#E2C896" />
+              <circle cx="60" cy="36" r="6" fill="#181B22" stroke="#C9A96E" stroke-width="1.6" />
+              <circle cx="162" cy="36" r="6" fill="#181B22" stroke="#C9A96E" stroke-width="1.6" />
+              <circle cx="54" cy="86" r="6" fill="#181B22" stroke="#C9A96E" stroke-width="1.6" />
+              <circle cx="166" cy="86" r="6" fill="#181B22" stroke="#C9A96E" stroke-width="1.6" />
+              <circle cx="110" cy="26" r="5" fill="#181B22" stroke="#E2C896" stroke-width="1.5" />
+              <text x="110" y="108" text-anchor="middle" fill="#E2C896" font-family="Georgia, serif" font-size="13" font-weight="bold">RED UdeG · 1989</text>
+            </svg>
+            <span class="text-[11px] uppercase tracking-widest text-champagneSoft mt-2">Cobertura Regional en Jalisco</span>
+          </div>
+        </article>
+
+        <!-- HITO 5: 2024 -->
+        <article class="relative card-editorial card-interactive rounded-3xl p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <span class="absolute -left-[29px] sm:-left-[49px] top-9 w-4 h-4 rounded-full bg-champagne ring-4 ring-graphite"></span>
+
+          <div class="lg:col-span-8 space-y-3">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-champagne text-graphite">
+                Año 2024
+              </span>
+              <span class="text-xs uppercase tracking-widest text-champagneSoft">Hito 05 · Contemporaneidad</span>
+            </div>
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory">
+              Autonomía Financiera Constitucional
+            </h2>
+            <p class="text-muted text-sm sm:text-base leading-relaxed">
+              Aprobada por unanimidad por el Congreso del Estado de Jalisco en 2024, garantizando un presupuesto anual constitucional fijo para asegurar el crecimiento de la matrícula y la modernización de los planteles a largo plazo.
+            </p>
+          </div>
+
+          <!-- Ilustración SVG 2024: Columnas constitucionales, escudo estilizado y balanza -->
+          <div class="lg:col-span-4 rounded-2xl bg-graphite/85 border border-champagne/25 p-5 flex flex-col items-center justify-center text-center">
+            <svg viewBox="0 0 220 130" class="w-full max-w-[210px] h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="10" width="200" height="110" rx="14" stroke="#C9A96E" stroke-opacity="0.25" />
+              <!-- Escudo institucional estilizado -->
+              <path d="M110 22L142 34V62C142 82 127 95 110 102C93 95 78 82 78 62V34L110 22Z" fill="#C9A96E" fill-opacity="0.16" stroke="#E2C896" stroke-width="1.8" />
+              <!-- Balanza de autonomía dentro del escudo -->
+              <line x1="110" y1="38" x2="110" y2="76" stroke="#E2C896" stroke-width="1.6" />
+              <line x1="92" y1="48" x2="128" y2="48" stroke="#E2C896" stroke-width="1.6" />
+              <path d="M86 60C89 65 95 65 98 60" stroke="#C9A96E" stroke-width="1.5" />
+              <path d="M122 60C125 65 131 65 134 60" stroke="#C9A96E" stroke-width="1.5" />
+              <!-- Columnas laterales -->
+              <line x1="54" y1="36" x2="54" y2="92" stroke="#C9A96E" stroke-opacity="0.55" stroke-width="2" />
+              <line x1="166" y1="36" x2="166" y2="92" stroke="#C9A96E" stroke-opacity="0.55" stroke-width="2" />
+              <text x="110" y="114" text-anchor="middle" fill="#E2C896" font-family="Georgia, serif" font-size="13" font-weight="bold">2024</text>
+            </svg>
+            <span class="text-[11px] uppercase tracking-widest text-champagneSoft mt-2">Presupuesto Constitucional Fijo</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECCIÓN 4: CONOCIMIENTO MATEMÁTICO (PREPA 2 VS. PREPA 3)
+         =================================================================== -->
+    <section id="view-matematicas" class="page-view space-y-8">
+      <div class="card-editorial rounded-3xl p-7 sm:p-10 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">
+            Capítulo 03 · Conocimiento Matemático
+          </span>
+          <span class="px-3.5 py-1 rounded-full text-xs font-medium bg-champagne/15 text-champagneSoft border border-champagne/30">
+            Global SEMS: 191,786 alumnos (Ciclo 2026-D)
+          </span>
+        </div>
+        <h1 class="font-serif text-3xl sm:text-5xl font-bold title-gold">
+          Densidad Poblacional: Prepa 2 vs. Prepa 3
+        </h1>
+        <p class="text-muted text-sm sm:text-base max-w-3xl leading-relaxed">
+          Estudio comparativo entre dos planteles tradicionales de Guadalajara ubicados en terrenos compactos regulados por la traza urbana (&lt; 1 km²): la <strong class="text-ivory">Preparatoria No. 2</strong> en zona centro (~10,000 m² / 0.01 km²) y la <strong class="text-ivory">Preparatoria No. 3</strong> en calle Álvaro del Castillo (~9,250 m² / 0.00925 km²).
+        </p>
+      </div>
+
+      <!-- Tarjetas Indicadores Clave por Plantel -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="card-editorial rounded-3xl p-7 border-l-4 border-l-champagne space-y-4">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-xs uppercase tracking-wider text-champagne font-semibold">Zona Centro · Guadalajara</p>
+              <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory mt-0.5">Preparatoria No. 2</h2>
+            </div>
+            <span class="px-3 py-1 rounded-xl bg-champagne/15 text-champagneSoft text-xs font-bold">1.75% SEMS</span>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="p-3.5 rounded-2xl bg-graphite/75 border border-white/[0.06]">
+              <p class="text-[11px] text-muted">Superficie</p>
+              <p class="text-base font-bold text-ivory mt-0.5">10,000 m²</p>
+              <p class="text-[10px] text-muted">0.01 km²</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-graphite/75 border border-white/[0.06]">
+              <p class="text-[11px] text-muted">Matrícula</p>
+              <p class="text-base font-bold text-ivory mt-0.5">3,350</p>
+              <p class="text-[10px] text-muted">1,675 / turno</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-graphite/75 border border-champagne/35">
+              <p class="text-[11px] text-champagneSoft">Densidad</p>
+              <p class="text-base font-bold text-champagne mt-0.5">5.97 m²</p>
+              <p class="text-[10px] text-muted">por alumno/turno</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-editorial rounded-3xl p-7 border-l-4 border-l-sky-400 space-y-4">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-xs uppercase tracking-wider text-sky-300 font-semibold">Calle Álvaro del Castillo</p>
+              <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory mt-0.5">Preparatoria No. 3</h2>
+            </div>
+            <span class="px-3 py-1 rounded-xl bg-sky-400/15 text-sky-300 text-xs font-bold">1.56% SEMS</span>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="p-3.5 rounded-2xl bg-graphite/75 border border-white/[0.06]">
+              <p class="text-[11px] text-muted">Superficie</p>
+              <p class="text-base font-bold text-ivory mt-0.5">9,250 m²</p>
+              <p class="text-[10px] text-muted">0.00925 km²</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-graphite/75 border border-white/[0.06]">
+              <p class="text-[11px] text-muted">Matrícula</p>
+              <p class="text-base font-bold text-ivory mt-0.5">3,000</p>
+              <p class="text-[10px] text-sky-300">+800 BGAI</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-graphite/75 border border-sky-400/35">
+              <p class="text-[11px] text-sky-300">Densidad</p>
+              <p class="text-base font-bold text-sky-400 mt-0.5">6.16 m²</p>
+              <p class="text-[10px] text-muted">por alumno/turno</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visualización Gráfica Comparativa -->
+      <div class="card-editorial rounded-3xl p-7 sm:p-9 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.08] pb-4">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Gráfico de Barras Agrupadas</span>
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory mt-0.5">
+              Comparativa Visual de Variables
+            </h2>
+          </div>
+          <div class="flex items-center gap-4 text-xs">
+            <span class="inline-flex items-center gap-1.5 text-champagneSoft font-medium">
+              <span class="w-3 h-3 rounded-sm bg-champagne"></span> Preparatoria No. 2
+            </span>
+            <span class="inline-flex items-center gap-1.5 text-sky-300 font-medium">
+              <span class="w-3 h-3 rounded-sm bg-sky-400"></span> Preparatoria No. 3
+            </span>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <!-- Variable 1 -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-graphite/65 border border-white/[0.06] space-y-3">
+            <div class="flex justify-between text-xs sm:text-sm font-medium text-ivory">
+              <span>1. Superficie del Terreno (m²)</span>
+              <span class="text-muted">Referencia: 10,000 m²</span>
+            </div>
+            <div class="space-y-2.5">
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs text-champagneSoft">
+                  <span>Preparatoria No. 2</span>
+                  <span class="font-semibold">10,000 m² (100%)</span>
+                </div>
+                <div class="w-full h-4 rounded-full bg-elevated overflow-hidden">
+                  <div class="h-full bg-champagne rounded-full" style="width: 100%;"></div>
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs text-sky-300">
+                  <span>Preparatoria No. 3</span>
+                  <span class="font-semibold">9,250 m² (92.5%)</span>
+                </div>
+                <div class="w-full h-4 rounded-full bg-elevated overflow-hidden">
+                  <div class="h-full bg-sky-400 rounded-full" style="width: 92.5%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Variable 2 -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-graphite/65 border border-white/[0.06] space-y-3">
+            <div class="flex justify-between text-xs sm:text-sm font-medium text-ivory">
+              <span>2. Matrícula Presencial Total (alumnos)</span>
+              <span class="text-muted">Referencia: 3,500 alumnos</span>
+            </div>
+            <div class="space-y-2.5">
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs text-champagneSoft">
+                  <span>Preparatoria No. 2 (1,675 matutino + 1,675 vespertino)</span>
+                  <span class="font-semibold">3,350 alumnos</span>
+                </div>
+                <div class="w-full h-4 rounded-full bg-elevated overflow-hidden">
+                  <div class="h-full bg-champagne rounded-full" style="width: 95.7%;"></div>
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs text-sky-300">
+                  <span>Preparatoria No. 3 (1,500 matutino + 1,500 vespertino · +800 BGAI)</span>
+                  <span class="font-semibold">3,000 alumnos</span>
+                </div>
+                <div class="w-full h-4 rounded-full bg-elevated overflow-hidden">
+                  <div class="h-full bg-sky-400 rounded-full" style="width: 85.7%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Variable 3 -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-graphite/65 border border-white/[0.06] space-y-3">
+            <div class="flex justify-between text-xs sm:text-sm font-medium text-ivory">
+              <span>3. Densidad Operativa por Turno (m²/alumno)</span>
+              <span class="text-muted">Referencia: 7.00 m²/alumno</span>
+            </div>
+            <div class="space-y-2.5">
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs text-champagneSoft">
+                  <span>Preparatoria No. 2</span>
+                  <span class="font-semibold">5.97 m² / alumno</span>
+                </div>
+                <div class="w-full h-4 rounded-full bg-elevated overflow-hidden">
+                  <div class="h-full bg-champagne rounded-full" style="width: 85.3%;"></div>
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs text-sky-300">
+                  <span>Preparatoria No. 3</span>
+                  <span class="font-semibold">6.16 m² / alumno</span>
+                </div>
+                <div class="w-full h-4 rounded-full bg-elevated overflow-hidden">
+                  <div class="h-full bg-sky-400 rounded-full" style="width: 88%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla Comparativa Detallada -->
+      <div class="card-editorial rounded-3xl p-7 sm:p-9 space-y-5">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Tabla Comparativa</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ivory mt-0.5">
+            Indicadores de Matrícula y Densidad Operativa
+          </h2>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-elevated text-champagneSoft border-b border-white/10">
+                <th class="py-3.5 px-4 sm:px-6 font-semibold">Variable de Análisis</th>
+                <th class="py-3.5 px-4 sm:px-6 font-semibold">Preparatoria No. 2</th>
+                <th class="py-3.5 px-4 sm:px-6 font-semibold">Preparatoria No. 3</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/[0.06] bg-graphite/50">
+              <tr>
+                <td class="py-3.5 px-4 sm:px-6 text-ivory font-medium">Matrícula Presencial Total</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">3,350 alumnos</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">3,000 alumnos</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 sm:px-6 text-ivory font-medium">Representación en el SEMS</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">1.75%</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">1.56%</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 sm:px-6 text-ivory font-medium">Alumnos Turno Matutino (50%)</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">1,675 alumnos</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">1,500 alumnos</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 sm:px-6 text-ivory font-medium">Alumnos Turno Vespertino (50%)</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">1,675 alumnos</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">1,500 alumnos</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 sm:px-6 text-ivory font-medium">Modalidad Mixta / Sabatina (BGAI)</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">0 alumnos</td>
+                <td class="py-3.5 px-4 sm:px-6 text-sky-300 font-medium">800 alumnos</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 sm:px-6 text-ivory font-medium">Superficie del Terreno</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">10,000 m²</td>
+                <td class="py-3.5 px-4 sm:px-6 text-muted">9,250 m²</td>
+              </tr>
+              <tr class="bg-champagne/10">
+                <td class="py-3.5 px-4 sm:px-6 text-champagneSoft font-semibold">Densidad por Alumno en Turno</td>
+                <td class="py-3.5 px-4 sm:px-6 text-ivory font-bold">5.97 m² / alumno</td>
+                <td class="py-3.5 px-4 sm:px-6 text-ivory font-bold">6.16 m² / alumno</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tarjetas de Semejanzas, Diferencias y Conclusiones -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <article class="lg:col-span-5 card-editorial rounded-3xl p-7 sm:p-8 space-y-4">
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Síntesis</span>
+          <h2 class="font-serif text-2xl font-semibold text-ivory">Semejanzas y Diferencias</h2>
+          <ul class="space-y-3 text-sm text-muted leading-relaxed">
+            <li class="p-3.5 rounded-2xl bg-graphite/65 border border-white/[0.06]">
+              <strong class="text-ivory">Matrícula regular:</strong> Cifras cercanas entre ambos planteles (3,350 alumnos en Prepa 2 frente a 3,000 en Prepa 3).
+            </li>
+            <li class="p-3.5 rounded-2xl bg-graphite/65 border border-white/[0.06]">
+              <strong class="text-ivory">Superficie urbana:</strong> Ambos ocupan el estándar de manzana completa (10,000 m² vs. 9,250 m²).
+            </li>
+            <li class="p-3.5 rounded-2xl bg-graphite/65 border border-white/[0.06]">
+              <strong class="text-ivory">Densidad operativa:</strong> Índices similares pero diferenciados (5.97 m²/alumno en Prepa 2 vs. 6.16 m²/alumno en Prepa 3).
+            </li>
+          </ul>
+        </article>
+
+        <article class="lg:col-span-7 card-editorial rounded-3xl p-7 sm:p-8 space-y-4">
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Conclusiones</span>
+          <h2 class="font-serif text-2xl font-semibold text-ivory">Hallazgos del Análisis</h2>
+
+          <div class="p-5 rounded-2xl bg-graphite/70 border border-champagne/25 space-y-1.5">
+            <h3 class="font-serif text-xl font-semibold text-champagneSoft">
+              Techo de Crecimiento de la Preparatoria 3
+            </h3>
+            <p class="text-muted text-sm sm:text-base leading-relaxed">
+              Aunque la densidad en turno regular es similar (6.16 vs. 5.97 m²/alumno), Prepa 3 absorbe 800 alumnos adicionales en modalidad BGAI los fines de semana, alcanzando su límite de saturación estructural absoluto y manteniendo constante su matrícula desde el año 2014.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-graphite/70 border border-white/[0.07] space-y-1.5">
+            <h3 class="font-serif text-xl font-semibold text-ivory">
+              Eficiencia en la Distribución de Turnos
+            </h3>
+            <p class="text-muted text-sm sm:text-base leading-relaxed">
+              El promedio cercano a 6 m² por estudiante en ambos planteles permite un desplazamiento razonable por el campus y favorece el desarrollo educativo y social, entendiendo que la concentración real varía entre aulas, pasillos y áreas comunes.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECCIÓN 5: INGLÉS (FICHA BÁSICA INDIVIDUAL)
+         =================================================================== -->
+    <section id="view-ingles" class="page-view space-y-8">
+      <div class="card-editorial rounded-3xl p-7 sm:p-10 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">
+            Capítulo 04 · Lengua Extranjera (Inglés)
+          </span>
+          <span class="px-3.5 py-1 rounded-full text-xs font-medium bg-champagne/15 text-champagneSoft border border-champagne/30">
+            Grupo 1° D, Turno Vespertino (1DTV) · Docente: Natalia Hernández
+          </span>
+        </div>
+
+        <h1 class="font-serif text-3xl sm:text-5xl font-bold title-gold">
+          Basic Personal Profile
+        </h1>
+
+        <p class="text-muted text-sm sm:text-base max-w-3xl leading-relaxed">
+          Ficha básica de presentación personal en idioma inglés desarrollada dentro del proyecto interdisciplinar para expresar identidad, edad, pasatiempos, preferencias alimenticias y rasgos físicos.
+        </p>
+      </div>
+
+      <!-- Tarjeta Editorial con la Presentación Individual en Inglés -->
+      <div class="card-editorial rounded-3xl p-7 sm:p-11 border-champagne/30 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-5">
+          <span class="inline-block px-3 py-1 rounded-lg bg-elevated border border-white/10 text-xs text-champagneSoft">
+            Individual Student Introduction
+          </span>
+
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">
+            José Eduardo Ramírez Gutiérrez
+          </h2>
+
+          <blockquote class="p-6 sm:p-8 rounded-2xl bg-graphite/85 border-l-4 border-champagne">
+            <p class="font-serif italic text-xl sm:text-2xl text-ivory leading-relaxed">
+              “Hi, I am Eduardo. I am 15 years old. I like playing football and painting. My favorite foods are hamburgers and chilaquiles, and my favorite color is red. My hair is brown.”
+            </p>
+          </blockquote>
+
+          <p class="text-xs sm:text-sm text-muted">
+            Traducción: “Hola, soy Eduardo. Tengo 15 años. Me gusta jugar fútbol y pintar. Mis comidas favoritas son las hamburguesas y los chilaquiles, y mi color favorito es el rojo. Mi cabello es café.”
+          </p>
+        </div>
+
+        <div class="lg:col-span-4 space-y-3">
+          <div class="p-4 rounded-2xl bg-graphite/75 border border-white/[0.07]">
+            <p class="text-[11px] uppercase tracking-wider text-champagne">Age</p>
+            <p class="text-sm font-semibold text-ivory mt-0.5">15 years old</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-graphite/75 border border-white/[0.07]">
+            <p class="text-[11px] uppercase tracking-wider text-champagne">Hobbies</p>
+            <p class="text-sm font-semibold text-ivory mt-0.5">Playing football &amp; painting</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-graphite/75 border border-white/[0.07]">
+            <p class="text-[11px] uppercase tracking-wider text-champagne">Favorite Foods</p>
+            <p class="text-sm font-semibold text-ivory mt-0.5">Hamburgers &amp; chilaquiles</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="p-4 rounded-2xl bg-graphite/75 border border-white/[0.07]">
+              <p class="text-[11px] uppercase tracking-wider text-champagne">Color</p>
+              <p class="text-sm font-semibold text-red-400 mt-0.5">Red</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-graphite/75 border border-white/[0.07]">
+              <p class="text-[11px] uppercase tracking-wider text-champagne">Hair</p>
+              <p class="text-sm font-semibold text-amber-300 mt-0.5">Brown</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta Complementaria: Estructura Gramatical y Referencia APA -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <article class="lg:col-span-7 card-editorial rounded-3xl p-7 sm:p-8 space-y-4">
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Enfoque Lingüístico</span>
+          <h3 class="font-serif text-2xl font-semibold text-ivory">Estructura Gramatical Aplicada: Present Simple</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div class="p-4 rounded-2xl bg-graphite/70 border border-white/[0.06]">
+              <p class="text-champagneSoft font-semibold">Identidad y Edad (Verb To Be)</p>
+              <p class="text-muted mt-1">“I am Eduardo. I am 15 years old.”</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-graphite/70 border border-white/[0.06]">
+              <p class="text-champagneSoft font-semibold">Gustos y Hábitos (Like + -ing)</p>
+              <p class="text-muted mt-1">“I like playing football and painting.”</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-graphite/70 border border-white/[0.06]">
+              <p class="text-champagneSoft font-semibold">Preferencias Personales</p>
+              <p class="text-muted mt-1">“My favorite foods are hamburgers and chilaquiles...”</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-graphite/70 border border-white/[0.06]">
+              <p class="text-champagneSoft font-semibold">Descripción Física</p>
+              <p class="text-muted mt-1">“My hair is brown.”</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="lg:col-span-5 card-editorial rounded-3xl p-7 sm:p-8 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <span class="text-xs font-semibold uppercase tracking-[0.18em] text-champagne">Referencia Académica (APA)</span>
+            <h3 class="font-serif text-2xl font-semibold text-ivory">Fuente Consultada</h3>
+            <p class="text-xs sm:text-sm text-muted leading-relaxed pt-1">
+              Cambridge University Press. (2026). <em class="text-ivory">Present simple (I work)</em>. Cambridge Dictionary. https://dictionary.cambridge.org/grammar/british-grammar/present-simple-i-work
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/[0.08] text-xs text-champagneSoft">
+            Asignatura: Lengua Extranjera (Inglés) · 1° D TV
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="border-t border-white/[0.08] bg-graphite mt-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted">
+      <div class="text-center sm:text-left space-y-1">
+        <p class="font-serif text-base text-ivory font-semibold">Mi voz, mi historia, mi identidad</p>
+        <p>José Eduardo Ramírez Gutiérrez · Grupo 1° D Turno Vespertino (1DTV) · Preparatoria No. 2, UdeG</p>
+      </div>
+      <p class="text-[11px] text-muted/75 text-center sm:text-right max-w-xs">
+        Portafolio digital académico · Debe eliminarse en un plazo no mayor a 3 días después de su evaluación final.
+      </p>
+    </div>
+  </footer>
+
+  <!-- CONTROL DE NAVEGACIÓN Y PESTAÑAS -->
+  <script>
+    function navigate(pageId) {
+      document.querySelectorAll('.page-view').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      const target = document.getElementById('view-' + pageId);
+      if (target) {
+        target.classList.add('active');
+      }
+
+      document.querySelectorAll('.nav-link').forEach(btn => {
+        const active = btn.getAttribute('data-tab') === pageId;
+        if (active) {
+          btn.classList.add('bg-champagne', 'text-graphite', 'font-semibold');
+          btn.classList.remove('text-muted', 'hover:text-ivory', 'hover:bg-white/[0.05]');
+        } else {
+          btn.classList.remove('bg-champagne', 'text-graphite', 'font-semibold');
+          btn.classList.add('text-muted', 'hover:text-ivory', 'hover:bg-white/[0.05]');
+        }
+      });
+
+      const drawer = document.getElementById('mobile-drawer');
+      if (drawer && !drawer.classList.contains('hidden')) {
+        drawer.classList.add('hidden');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMobileNav() {
+      const drawer = document.getElementById('mobile-drawer');
+      if (drawer) {
+        drawer.classList.toggle('hidden');
+      }
+    }
+
+    function switchAutoTab(tab) {
+      const panelA = document.getElementById('auto-tab-a');
+      const panelB = document.getElementById('auto-tab-b');
+      const btnA = document.getElementById('btn-tab-a');
+      const btnB = document.getElementById('btn-tab-b');
+
+      const activeClasses = 'px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-champagne text-graphite transition-all';
+      const inactiveClasses = 'px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-muted hover:text-ivory transition-all';
+
+      if (tab === 'a') {
+        panelA.classList.remove('hidden');
+        panelB.classList.add('hidden');
+        btnA.className = activeClasses;
+        btnB.className = inactiveClasses;
+        btnA.setAttribute('aria-selected', 'true');
+        btnB.setAttribute('aria-selected', 'false');
+      } else {
+        panelA.classList.add('hidden');
+        panelB.classList.remove('hidden');
+        btnA.className = inactiveClasses;
+        btnB.className = activeClasses;
+        btnA.setAttribute('aria-selected', 'false');
+        btnB.setAttribute('aria-selected', 'true');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      navigate('inicio');
+      switchAutoTab('a');
+    });
+  </script>
+</body>
+</html>
